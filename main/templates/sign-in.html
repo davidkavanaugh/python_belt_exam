@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <!-- Optional theme -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <title>Log In</title>
+  </head>
+  <body>
+    <header>
+      <h1>Python Belt Exam</h1>
+      <div class="header-right"></div>
+    </header>
+    <div id="login" class="container text-center">
+      <div class="messages">
+        {% if messages %} {% for message in messages %}
+        <div class="{{ message.tags }}">{{ message }}</div>
+        {% endfor %} {% endif %}
+      </div>
+      <h3>Log In</h3>
+      <form action="/users/get" method="POST">
+        {% csrf_token %}
+        <input name="email" type="text" placeholder="Email Address" /><br />
+        <input name="password" type="password" placeholder="Password" /><br />
+        <input type="submit" value="Log In" />
+      </form>
+      <p>Need an account? <a href="sign-up">Register</a></p>
+    </div>
+  </body>
+</html>
