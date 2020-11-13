@@ -27,30 +27,42 @@
       integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main.css' %}" />
-    <title>Log In</title>
+    <link rel="stylesheet" href="{% static 'trips.css' %}" />
+    <script>
+        $(document).ready(function () {
+          $("#date-picker").datepicker({
+            format: "mm/dd/yyyy",
+          });
+        });
+    </script>
+    <title>View Trip</title>
   </head>
   <body>
     <header>
-      <h1>Python Belt Exam</h1>
-      <div class="header-right"></div>
-    </header>
-    <div id="login" class="container text-center">
-      <div class="messages">
-        {% if messages %} {% for message in messages %}
-        <div class="{{ message.tags }}">{{ message }}</div>
-        {% endfor %} {% endif %}
+      <h1>Hello {{user.first_name}}! Read about this trip!</h1>
+      <div class="header-right">
+        <a class="btn" href="/dashboard">Dashboard</a>
+        <a class="btn" href="/logout">Logout</a>
       </div>
-      <h3>Log In</h3>
-      <form action="/users/get" method="POST">
-        {% csrf_token %}
-        <input name="email" type="text" placeholder="Email Address" /><br />
-        <input name="password" type="password" placeholder="Password" /><br />
-        <input type="submit" value="Log In" />
-      </form>
-      <p>Need an account? <a href="sign-up">Register</a></p>
-      <p>test test test</p>
+    </header>
+    <div class="container">
+        <h2>{{trip.destination}}</h2>
+        Start Date: {{trip.start_date}}<br />
+        End Date: {{trip.end_date}}<br />
+        Created On: {{trip.created_at}}<br />
+        Last Updated: {{trip.updated_at}}<br />
+        Plan: {{trip.plan}}<br />
+        Created By: {{trip.created_by.first_name}}<br /><br />
+        <h3>People who've joined the trip</h3>
+        {%for attendee in trip.attendees.all%}
+        {%if trip.created_by.id != attendee.id%}
+        {%if user.id != attendee.id%}
+        {{attendee.first_name}}<br />
+        {%endif%}
+        {%endif%}
+        {%endfor%}
     </div>
   </body>
 </html>

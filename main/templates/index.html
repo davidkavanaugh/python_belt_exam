@@ -29,13 +29,50 @@
     ></script>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main.css' %}" />
-    <title>Log In</title>
+    <title>Trip Buddy</title>
   </head>
   <body>
     <header>
-      <h1>Python Belt Exam</h1>
-      <div class="header-right"><a class="btn" href="log-out">Log out</a></div>
+      <h1>Welcome! Let's Travel!</h1>
+      <div class="header-right"></div>
     </header>
-    <div class="container"></div>
+    <div id="login" class="container text-center">
+      <div class="messages">
+        {% if messages %} 
+        {% for message in messages %}
+        {%if message.extra_tags == "login"%}
+        <div class="{{ message.tags }}">{{ message }}</div>
+        {%endif%}
+        {% endfor %} {% endif %}
+      </div>
+      <h3>Log In</h3>
+      <form action="/users/get" method="POST">
+        {% csrf_token %}
+        <input name="email" type="text" placeholder="Email Address" /><br />
+        <input name="password" type="password" placeholder="Password" /><br />
+        <input type="submit" value="Log In" />
+      </form>
+      <div class="messages">
+        {% if messages %} {% for message in messages %}
+        {%if message.extra_tags == "register"%}
+        <div class="{{ message.tags }}">{{ message }}</div>
+        {%endif%}
+        {% endfor %} {% endif %}
+      </div>
+      <h3>Register</h3>
+      <form action="/users/create" method="POST">
+        {% csrf_token %}
+        <input name="first_name" type="text" placeholder="First Name" /><br />
+        <input name="last_name" type="text" placeholder="Last Name" /><br />
+        <input name="email" type="text" placeholder="Email Address" /><br />
+        <input name="password_1" type="password" placeholder="Password" /><br />
+        <input
+          name="password_2"
+          type="password"
+          placeholder="Confirm Password"
+        /><br />
+        <input type="submit" value="Register" />
+      </form>
+    </div>
   </body>
 </html>
